@@ -123,3 +123,7 @@ The key points of this algorithm are:
 - It creates and returns a task, which is a wrapper around the coroutine
 
 This approach allows for more flexible handling of the asynchronous operation, as the caller can decide when and how to await the task or run it concurrently with other tasks.
+
+## Task 4
+
+Take the code from `wait_n` and alter it into a new function `task_wait_n`. The code is nearly identical to `wait_n` except `task_wait_random` is being called.
