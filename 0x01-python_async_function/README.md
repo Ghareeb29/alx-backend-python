@@ -96,3 +96,30 @@
     - Calculate and return average time by dividing total time by n
 
 - This implementation measures the total execution time of wait_n(n, max_delay) and returns the average time per operation. The time.time() function gives us a float representing the current time, which we use to calculate the elapsed time. We use asyncio.run() to execute the asynchronous wait_n function in a synchronous context.
+
+## Task 3
+
+Here's an algorithm for the problem you've described, without actual code:
+
+1. Import required modules:
+   - Import `wait_random` from the file `0-basic_async_syntax`
+   - Import `asyncio` module
+
+2. Define a regular function named `task_wait_random`:
+   - Parameter: `max_delay` (integer)
+   - Return type: `asyncio.Task`
+
+3. Inside `task_wait_random`:
+   - Use `asyncio.create_task()` function to create a new task
+   - Pass the coroutine object returned by `wait_random(max_delay)` to `create_task()`
+   - Return the created task
+
+This algorithm will create and return an `asyncio.Task` object that, when run, will execute the `wait_random` coroutine with the given `max_delay`.
+
+The key points of this algorithm are:
+
+- It's a regular function, not an async function
+- It doesn't await the result of `wait_random`
+- It creates and returns a task, which is a wrapper around the coroutine
+
+This approach allows for more flexible handling of the asynchronous operation, as the caller can decide when and how to await the task or run it concurrently with other tasks.
