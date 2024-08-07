@@ -2,7 +2,7 @@
 
 ## Task 1
 
-    1. Imports:
+1. Imports:
 
     ```python
     import asyncio
@@ -12,7 +12,7 @@
 
     We import the necessary modules: `asyncio` for asynchronous programming, `List` for type hinting, and `wait_random` from the previous file.
 
-    2. Function definition:
+2. Function definition:
 
     ```python
     async def wait_n(n: int, max_delay: int) -> List[float]:
@@ -20,7 +20,7 @@
 
     This defines an asynchronous function `wait_n` that takes two integer arguments: `n` and `max_delay`. It returns a list of floats.
 
-    3. Initialize the delays list:
+3. Initialize the delays list:
 
     ```python
     delays = []
@@ -28,7 +28,7 @@
 
     This empty list will store the delay values in ascending order.
 
-    4. Inner function definition:
+4. Inner function definition:
 
     ```python
     async def add_delay():
@@ -36,7 +36,7 @@
 
     This is an asynchronous inner function that will be called for each of the `n` iterations.
 
-    5. Get a random delay:
+5. Get a random delay:
 
     ```python
     delay = await wait_random(max_delay)
@@ -44,7 +44,7 @@
 
     We await the result of `wait_random(max_delay)` to get a random delay.
 
-    6. Insert the delay in the correct position:
+6. Insert the delay in the correct position:
 
     ```python
     for i, d in enumerate(delays):
@@ -56,7 +56,7 @@
 
     This loop finds the correct position to insert the new delay to maintain ascending order. If no smaller delay is found, it's appended to the end.
 
-    7. Spawn `n` coroutines:
+7. Spawn `n` coroutines:
 
     ```python
     await asyncio.gather(*(add_delay() for _ in range(n)))
@@ -64,7 +64,7 @@
 
     This line creates `n` coroutines of `add_delay()` and runs them concurrently using `asyncio.gather()`.
 
-    8. Return the result:
+8. Return the result:
 
     ```python
     return delays
@@ -73,3 +73,26 @@
     The function returns the list of delays, which is now in ascending order.
 
     This implementation ensures that the delays are added to the list in ascending order without using `sort()`. It maintains the order as the delays are generated concurrently, which is more efficient than sorting afterward, especially for large `n`.
+
+## Task 2
+
+1. Import necessary modules:
+
+    - Import wait_n from the previous file
+    - Import time module
+    - Import asyncio module
+
+2. Define the measure_time function:
+
+    - Parameters: n (int) and max_delay (int)
+    - Return type: float
+
+3. Inside measure_time:
+
+    - Record the start time using time.time()
+    - Run the wait_n(n, max_delay) function using asyncio.run()
+    - Record the end time using time.time()
+    - Calculate total time by subtracting start time from end time
+    - Calculate and return average time by dividing total time by n
+
+- This implementation measures the total execution time of wait_n(n, max_delay) and returns the average time per operation. The time.time() function gives us a float representing the current time, which we use to calculate the elapsed time. We use asyncio.run() to execute the asynchronous wait_n function in a synchronous context.
