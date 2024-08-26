@@ -27,7 +27,8 @@ class TestAccessNestedMap(TestCase):
         ]
     )
     def test_access_nested_map(
-        self: "TestAccessNestedMap", nested_map: dict,
+        self: "TestAccessNestedMap",
+        nested_map: dict,
         path: list,
         expected: any
     ) -> None:
@@ -41,9 +42,7 @@ class TestAccessNestedMap(TestCase):
         ]
     )
     def test_access_nested_map_exception(
-        self: "TestAccessNestedMap",
-        nested_map: dict,
-        path: list
+        self: "TestAccessNestedMap", nested_map: dict, path: list
     ) -> None:
         """Test that access_nested_map raises a KeyError"""
         with self.assertRaises(KeyError) as exception:
@@ -51,5 +50,19 @@ class TestAccessNestedMap(TestCase):
         self.assertEqual(str(exception.exception), f"KeyError({path})")
 
 
-if __name__ == "__main__":
-    unittest.main()
+class TestGetJson(TestCase):
+    """Unit testing class for utils.get_json"""
+
+    @parameterized.expand(
+        [
+            ("http://example.com", {"payload": True}),
+            ("http://example.com", {"payload": True}),
+        ]
+    )
+    @patch("utils.requests.get")
+    def test_get_json(
+        self: "TestGetJson", url: str, payload: dict, mock_get: mock
+    ) -> None:
+        """Test that get_json returns the expected value"""
+        mock_get.return_value.json.return_value = payload
+        self.assertEqual(get_json(url), payload)
