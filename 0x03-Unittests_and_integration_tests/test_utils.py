@@ -16,23 +16,39 @@ from parameterized import parameterized
 from utils import access_nested_map, get_json, memoize
 
 
-@parameterized.expand(
-    [
-        ({"a": 1}, ["a"], 1),
-        ({"a": {"b": 2}}, ["a"], {"b": 2}),
-        ({"a": {"b": 2}}, ["a", "b"], 2),
-    ]
-)
 class TestAccessNestedMap(TestCase):
     """Unit testing class for utils.access_nested_map"""
 
+    @parameterized.expand(
+        [
+            ({"a": 1}, ["a"], 1),
+            ({"a": {"b": 2}}, ["a"], {"b": 2}),
+            ({"a": {"b": 2}}, ["a", "b"], 2),
+        ]
+    )
     def test_access_nested_map(
-        self: "TestAccessNestedMap",
-        nested_map: dict,
-        path: list, expected: any
-    ):
+        self: "TestAccessNestedMap", nested_map: dict,
+        path: list,
+        expected: any
+    ) -> None:
         """Test that access_nested_map returns the expected value"""
         self.assertEqual(access_nested_map(nested_map, path), expected)
+
+    @parameterized.expand(
+        [
+            ({}, ["a"]),
+            ({"a": 1}, ["a", "b"]),
+        ]
+    )
+    def test_access_nested_map_exception(
+        self: "TestAccessNestedMap",
+        nested_map: dict,
+        path: list
+    ) -> None:
+        """Test that access_nested_map raises a KeyError"""
+        with self.assertRaises(KeyError) as exception:
+            access_nested_map(nested_map, path)
+        self.assertEqual(str(exception.exception), f"KeyError({path})")
 
 
 if __name__ == "__main__":
