@@ -26,7 +26,11 @@ from utils import access_nested_map, get_json, memoize
 class TestAccessNestedMap(TestCase):
     """Unit testing class for utils.access_nested_map"""
 
-    def test_access_nested_map(self, nested_map, path, expected):
+    def test_access_nested_map(
+        self: "TestAccessNestedMap",
+        nested_map: dict,
+        path: list, expected: any
+    ):
         """Test that access_nested_map returns the expected value"""
         self.assertEqual(access_nested_map(nested_map, path), expected)
 
