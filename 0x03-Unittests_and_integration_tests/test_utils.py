@@ -35,5 +35,6 @@ class TestAccessNestedMap(TestCase):
         with self.assertRaises(KeyError):
             access_nested_map({}, ["a", "b"])
 
+
 if __name__ == "__main__":
     unittest.main()
