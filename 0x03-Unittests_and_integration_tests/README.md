@@ -156,3 +156,28 @@ This test ensures that:
 
 * The `_public_repos_url` property is correctly extracting the `repos_url` from the data returned by the `org` property.
 * It's doing so without making any actual HTTP requests, as the `org` property is mocked to return our known payload.
+
+### Task 6: More patching
+
+1. We've added a new method `test_public_repos` to the `TestGithubOrgClient` class.
+
+2. This method is decorated with `@patch('client.get_json')` to mock the `get_json` function.
+
+3. In this method:
+   * We define a `test_payload` list that mimics the structure of the data we expect from the API call.
+
+   * We set the return value of the mocked `get_json` to our `test_payload`.
+
+   * We use `patch.object` as a context manager to mock the `_public_repos_url` property of `GithubOrgClient`. We use `PropertyMock` as the `new_callable` to properly mock a property.
+
+   * Inside the context manager:
+     * We create an instance of `GithubOrgClient`.
+     * We call the `public_repos` method on this instance.
+     * We assert that the result matches the expected list of repo names extracted from our test payload.
+     * We assert that both the mocked `_public_repos_url` property and the mocked `get_json` function were called once.
+
+This test ensures that:
+
+* The `public_repos` method is correctly extracting the repo names from the data returned by the API call.
+* It's doing so without making any actual HTTP requests, as both `get_json` and `_public_repos_url` are mocked.
+* The method is calling `get_json` with the correct URL (indirectly tested by mocking `_public_repos_url`).
