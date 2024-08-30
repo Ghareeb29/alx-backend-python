@@ -181,3 +181,24 @@ This test ensures that:
 * The `public_repos` method is correctly extracting the repo names from the data returned by the API call.
 * It's doing so without making any actual HTTP requests, as both `get_json` and `_public_repos_url` are mocked.
 * The method is calling `get_json` with the correct URL (indirectly tested by mocking `_public_repos_url`).
+
+### Task 7: Parameterize
+
+1. We've added a new method `test_has_license` to the `TestGithubOrgClient` class.
+
+2. This method is decorated with `@parameterized.expand` to test multiple inputs for the `has_license` method.
+
+3. We've defined two test cases:
+   * A repo with a license key that matches the input license key (expected to return True)
+   * A repo with a license key that doesn't match the input license key (expected to return False)
+
+4. In this method:
+   * We create an instance of `GithubOrgClient`.
+   * We call the `has_license` method with the provided `repo` and `license_key`.
+   * We assert that the result matches the expected boolean value.
+
+This test ensures that:
+
+* The `has_license` method correctly identifies when a repo has a specific license.
+* It correctly returns False when the repo doesn't have the specified license.
+* It works correctly with different input structures.

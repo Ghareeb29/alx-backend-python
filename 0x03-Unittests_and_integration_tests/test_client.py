@@ -59,8 +59,8 @@ class TestGithubOrgClient(unittest.TestCase):
         """
         Test the public_repos method of GithubOrgClient.
         """
-        test_payload = [{"name": "repo1"}, {"name": "repo2"},
-                        {"name": "repo3"}]
+        test_payload = [
+            {"name": "repo1"}, {"name": "repo2"}, {"name": "repo3"}]
         mock_get_json.return_value = test_payload
 
         with patch.object(
@@ -77,6 +77,28 @@ class TestGithubOrgClient(unittest.TestCase):
 
             mock_public_repos_url.assert_called_once()
             mock_get_json.assert_called_once()
+
+    @parameterized.expand(
+        [
+            ({"license": {"key": "my_license"}}, "my_license", True),
+            ({"license": {"key": "other_license"}}, "my_license", False),
+        ]
+    )
+    def test_has_license(self, repo, license_key, expected):
+        """
+        Test the has_license method of GithubOrgClient.
+
+        Args:
+            repo (dict): The repository dictionary.
+            license_key (str): The license key to check for.
+            expected (bool): The expected result.
+
+        Returns:
+            None
+        """
+        test_client = GithubOrgClient("testorg")
+        result = test_client.has_license(repo, license_key)
+        self.assertEqual(result, expected)
 
 
 if __name__ == "__main__":
