@@ -88,3 +88,28 @@ This implementation tests both that a `KeyError` is raised and that the exceptio
 6. We've updated the type annotations to include the new types used in this test.
 
 This implementation tests the `get_json` function without making actual HTTP requests, by mocking the `requests.get` function. It verifies that `get_json` calls `requests.get` with the correct URL and returns the expected payload.
+
+### Task 3: Parameterize and patch as decorators
+
+1. We've added a new class `TestMemoize` that inherits from `unittest.TestCase`.
+
+2. Inside `TestMemoize`, we've implemented the `test_memoize` method.
+
+3. Within `test_memoize`, we define the `TestClass` as specified in the task, with `a_method` and `a_property` (decorated with `@memoize`).
+
+4. We use `patch.object` to mock the `a_method` of `TestClass`, setting its return value to 42.
+
+5. In the test:
+   * We create an instance of `TestClass`.
+   * We call `a_property` twice and store the results.
+   * We assert that both calls to `a_property` return 42.
+   * We use `assert_called_once()` to verify that `a_method` was only called once, demonstrating that the memoization worked.
+
+6. We've updated the type annotations to include the new types used in this test.
+
+This implementation tests the `memoize` decorator by verifying that:
+
+* The correct result (42) is returned when calling the memoized property.
+* The underlying method (`a_method`) is only called once, even when the property is accessed multiple times.
+
+This addition completes the implementation of the `TestMemoize` class with the `test_memoize` method as requested in the task. It demonstrates understanding of memoization and correctly tests the behavior of the `memoize` decorator.
