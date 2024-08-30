@@ -113,3 +113,26 @@ This implementation tests the `memoize` decorator by verifying that:
 * The underlying method (`a_method`) is only called once, even when the property is accessed multiple times.
 
 This addition completes the implementation of the `TestMemoize` class with the `test_memoize` method as requested in the task. It demonstrates understanding of memoization and correctly tests the behavior of the `memoize` decorator.
+
+### Task 4: Parameterize and patch as decorators
+
+1. We import the necessary modules: `unittest` for creating test cases, `patch` from `unittest.mock` for mocking, `parameterized` for parametrizing tests, and `GithubOrgClient` from the `client` module.
+
+2. We define the `TestGithubOrgClient` class that inherits from `unittest.TestCase`.
+
+3. Inside this class, we implement the `test_org` method:
+   * It's decorated with `@parameterized.expand` to test with two different organization names: "google" and "abc".
+   * It's also decorated with `@patch('client.get_json')` to mock the `get_json` function used in the `GithubOrgClient` class.
+
+4. In the `test_org` method:
+   * We create an instance of `GithubOrgClient` with the given `org_name`.
+   * We call the `org` method on this instance.
+   * We use `assert_called_once_with` to verify that `get_json` was called exactly once with the correct URL.
+
+5. The `if __name__ == '__main__':` block allows the tests to be run directly from this file.
+
+This test ensures that:
+
+* The `org` method of `GithubOrgClient` is calling `get_json` with the correct URL.
+* It's tested for multiple organization names.
+* No actual HTTP requests are made during testing, as `get_json` is mocked.
