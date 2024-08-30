@@ -44,3 +44,47 @@ python3 -m unittest test_utils.py
 * Implement `TestAccessNestedMap.test_access_nested_map` method to test `utils.access_nested_map`
 * Use `@parameterized.expand` to test the function with different inputs
 * Verify that the function returns the expected results using `assertEqual`
+
+### Task 1: Parameterize and patch
+
+1. We've added a new method `test_access_nested_map_exception` to the `TestAccessNestedMap` class.
+
+2. This method uses `@parameterized.expand` to test two scenarios:
+   * An empty dictionary with a path of `("a",)`
+   * A dictionary `{"a": 1}` with a path of `("a", "b")`
+
+3. The method takes three parameters:
+   * `nested_map`: The input dictionary
+   * `path`: The path to access
+   * `expected_exception_msg`: The expected message of the KeyError
+
+4. We use the `assertRaises` context manager to check that a `KeyError` is raised when calling `access_nested_map` with the given inputs.
+
+5. After the `assertRaises` block, we check that the exception message matches the expected message using `self.assertEqual`.
+
+6. We've also updated the type annotations to include `Union` for more precise typing.
+
+This implementation tests both that a `KeyError` is raised and that the exception message is correct for each input case. The test will fail if either the exception is not raised or if the exception message is not as expected.
+
+### Task 2: Mock HTTP calls
+
+1. We've imported `patch` and `Mock` from `unittest.mock`.
+
+2. We've added a new class `TestGetJson` that inherits from `unittest.TestCase`.
+
+3. In this class, we've implemented the `test_get_json` method, which is decorated with `@parameterized.expand` to test two scenarios:
+   * URL: "<http://example.com>" with payload `{"payload": True}`
+   * URL: "<http://holberton.io>" with payload `{"payload": False}`
+
+4. We've also added the `@patch('requests.get')` decorator to mock the `requests.get` function.
+
+5. In the `test_get_json` method:
+   * We create a mock response object and set its `json` method to return the `test_payload`.
+   * We set the return value of the mocked `get` function to this mock response.
+   * We call `get_json` with the `test_url`.
+   * We assert that `mock_get` was called once with `test_url` as an argument.
+   * We assert that the result of `get_json` is equal to `test_payload`.
+
+6. We've updated the type annotations to include the new types used in this test.
+
+This implementation tests the `get_json` function without making actual HTTP requests, by mocking the `requests.get` function. It verifies that `get_json` calls `requests.get` with the correct URL and returns the expected payload.
