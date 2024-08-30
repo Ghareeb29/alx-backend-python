@@ -136,3 +136,23 @@ This test ensures that:
 * The `org` method of `GithubOrgClient` is calling `get_json` with the correct URL.
 * It's tested for multiple organization names.
 * No actual HTTP requests are made during testing, as `get_json` is mocked.
+
+### Task 5: Mocking a property
+
+1. We've added a new method `test_public_repos_url` to the `TestGithubOrgClient` class.
+
+2. In this method:
+   * We define a `known_payload` dictionary that mimics the structure of the data we expect from the `org` property.
+
+   * We use `patch.object` as a context manager to mock the `org` property of `GithubOrgClient`. We use `PropertyMock` as the `new_callable` to properly mock a property.
+
+   * Inside the context manager:
+     * We create an instance of `GithubOrgClient`.
+     * We call the `_public_repos_url` property on this instance.
+     * We assert that the result matches the `repos_url` from our known payload.
+     * We also assert that the mocked `org` property was called once.
+
+This test ensures that:
+
+* The `_public_repos_url` property is correctly extracting the `repos_url` from the data returned by the `org` property.
+* It's doing so without making any actual HTTP requests, as the `org` property is mocked to return our known payload.
