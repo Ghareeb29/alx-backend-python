@@ -202,3 +202,9 @@ This test ensures that:
 * The `has_license` method correctly identifies when a repo has a specific license.
 * It correctly returns False when the repo doesn't have the specified license.
 * It works correctly with different input structures.
+
+### Task 8: Integration tests: fixtures:
+
+### Task 9: Integration tests:
+
+To be implemented.
